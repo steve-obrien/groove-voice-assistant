@@ -1,0 +1,29 @@
+{
+	"name": "groove-voice-assistant",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"description": "A realtime OpenAI voice assistant that creates playlists and controls Spotify.",
+	"license": "MIT",
+	"keywords": [
+		"openai",
+		"realtime-api",
+		"spotify",
+		"voice-assistant",
+		"webrtc"
+	],
+	"scripts": {
+		"ci": "npm run check && npm test",
+		"dev": "node --watch src/server.js",
+		"start": "node src/server.js",
+		"test": "node --test",
+		"check": "node --check src/config.js && node --check src/errors.js && node --check src/realtime.js && node --check src/server.js && node --check src/spotify-auth.js && node --check src/spotify-client.js && node --check src/spotify-service.js && node --check src/tools.js && node --check public/app.js"
+	},
+	"engines": {
+		"node": ">=22"
+	},
+	"dependencies": {
+		"dotenv": "^17.4.2",
+		"express": "^5.2.1"
+	}
+}

@@ -1,0 +1,13 @@
+node_modules/
+.env
+.env.*
+!.env.example
+.spotify-tokens.json
+.spotify-tokens.json.*.tmp
+npm-debug.log*
+*.log
+.DS_Store
+.idea/
+.playwright-cli/
+.vscode/
+coverage/

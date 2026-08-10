@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta
+			name="description"
+			content="A realtime voice assistant for creating playlists and controlling Spotify."
+		>
+		<title>Groove — Spotify voice assistant</title>
+		<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+		<link rel="stylesheet" href="/styles.css">
+	</head>
+	<body>
+		<div class="ambient ambient-one" aria-hidden="true"></div>
+		<div class="ambient ambient-two" aria-hidden="true"></div>
+
+		<header class="site-header">
+			<a class="brand" href="/" aria-label="Groove home">
+				<span class="brand-mark" aria-hidden="true">
+					<span></span><span></span><span></span>
+				</span>
+				<span>groove</span>
+			</a>
+
+			<div class="header-actions">
+				<span id="spotify-pill" class="status-pill status-pill-offline">
+					<span class="status-dot" aria-hidden="true"></span>
+					<span>Spotify offline</span>
+				</span>
+				<a id="spotify-connect" class="button button-secondary" href="/auth/spotify">
+					Connect Spotify
+				</a>
+			</div>
+		</header>
+
+		<main class="app-shell">
+			<section class="assistant-panel" aria-labelledby="assistant-heading">
+				<div class="eyebrow">Realtime voice control</div>
+				<h1 id="assistant-heading">Say it.<br><span>Hear it happen.</span></h1>
+				<p class="hero-copy">
+					Create the perfect playlist, start the music, or skip a track — all without lifting a finger.
+				</p>
+
+				<div class="voice-stage">
+					<div class="voice-orbit orbit-one" aria-hidden="true"></div>
+					<div class="voice-orbit orbit-two" aria-hidden="true"></div>
+					<button id="voice-button" class="voice-button" type="button" aria-pressed="false" aria-describedby="connection-status">
+						<span class="voice-icon" aria-hidden="true">
+							<svg viewBox="0 0 24 24" focusable="false">
+								<path d="M12 15.25a3.75 3.75 0 0 0 3.75-3.75v-5a3.75 3.75 0 1 0-7.5 0v5A3.75 3.75 0 0 0 12 15.25Z"></path>
+								<path d="M18.5 10.75v.75a6.5 6.5 0 0 1-13 0v-.75M12 18v3M9 21h6"></path>
+							</svg>
+						</span>
+						<span id="voice-label">Start listening</span>
+					</button>
+				</div>
+
+				<div id="connection-status" class="connection-status" role="status" aria-live="polite">
+					Connect Spotify, then start the assistant.
+				</div>
+				<button id="end-session-button" class="end-session-button" type="button" hidden>
+					End voice session
+				</button>
+
+				<div class="prompt-ideas" aria-label="Things to try">
+					<span>Try saying</span>
+					<button class="prompt-chip" type="button" data-prompt="Create a playlist of funky tunes to wake up to">
+						“Funky tunes to wake up to”
+					</button>
+					<button class="prompt-chip" type="button" data-prompt="Add some Stevie Wonder to that playlist">
+						“Add some Stevie Wonder”
+					</button>
+				</div>
+			</section>
+
+			<aside class="activity-panel" aria-label="Assistant activity">
+				<section class="now-playing-card" aria-labelledby="now-playing-heading">
+					<div class="card-heading-row">
+						<div>
+							<div class="eyebrow">Spotify</div>
+							<h2 id="now-playing-heading">Now playing</h2>
+						</div>
+						<div id="playing-indicator" class="playing-bars is-paused" aria-hidden="true">
+							<span></span><span></span><span></span><span></span>
+						</div>
+					</div>
+
+					<div id="player-empty" class="player-empty">Nothing playing yet</div>
+					<div id="player-content" class="player-content" hidden>
+						<a id="track-link" class="track-title" href="#" target="_blank" rel="noreferrer"></a>
+						<div id="track-artist" class="track-artist"></div>
+						<div id="track-device" class="track-device"></div>
+					</div>
+
+					<div class="player-controls" aria-label="Playback controls">
+						<button class="control-button" type="button" data-tool="play_music" aria-label="Play">
+							<svg viewBox="0 0 24 24" focusable="false"><path d="m8 5 11 7-11 7V5Z"></path></svg>
+						</button>
+						<button class="control-button control-primary" type="button" data-tool="pause_music" aria-label="Pause">
+							<svg viewBox="0 0 24 24" focusable="false"><path d="M7 5h4v14H7zM13 5h4v14h-4z"></path></svg>
+						</button>
+						<button class="control-button" type="button" data-tool="skip_track" aria-label="Skip">
+							<svg viewBox="0 0 24 24" focusable="false"><path d="m6 5 9 7-9 7V5ZM16 5h2v14h-2z"></path></svg>
+						</button>
+					</div>
+				</section>
+
+				<section class="transcript-card" aria-labelledby="transcript-heading">
+					<div class="card-heading-row">
+						<h2 id="transcript-heading">Conversation</h2>
+						<span id="live-badge" class="live-badge">Idle</span>
+					</div>
+					<div id="transcript" class="transcript" aria-live="polite">
+						<div class="transcript-entry assistant-entry">
+							<span class="speaker">Groove</span>
+							<p>Ready when you are.</p>
+						</div>
+					</div>
+
+					<form id="text-form" class="text-form">
+						<label class="sr-only" for="text-prompt">Type a request</label>
+						<input id="text-prompt" type="text" placeholder="Or type a request…" autocomplete="off">
+						<button type="submit" aria-label="Send request">
+							<svg viewBox="0 0 24 24" focusable="false"><path d="m4 4 17 8-17 8 3-8-3-8Zm3 8h14"></path></svg>
+						</button>
+					</form>
+				</section>
+			</aside>
+		</main>
+
+		<footer>
+			<span>Powered by OpenAI Realtime API</span>
+			<span aria-hidden="true">•</span>
+			<a href="https://www.spotify.com/" target="_blank" rel="noreferrer">Open Spotify</a>
+		</footer>
+
+		<audio id="assistant-audio" autoplay hidden></audio>
+		<script type="module" src="/app.js"></script>
+	</body>
+</html>
